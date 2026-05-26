@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>计算机科学 · PreAP/IGCSE + AP + A-Level 全景 | 详细课程与考核</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #eef2f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 16px;
+            font-family: 'Segoe UI', 'Inter', system-ui, 'Noto Sans SC', sans-serif;
+            overflow-x: auto;
+        }
+
+        .mindmap-container {
+            background: white;
+            border-radius: 36px;
+            box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            display: inline-block;
+            min-width: 100%;
+        }
+
+        .top-bar {
+            background: linear-gradient(135deg, #101D49 0%, #1B2D5A 100%);
+            padding: 16px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            border-bottom: 4px solid #f39c12;
+            width: 100%;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .logo-img {
+            height: 52px;
+            width: auto;
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 5px 14px;
+            object-fit: contain;
+        }
+
+        .header-title {
+            color: #fefefe;
+            font-weight: 700;
+            font-size: 1.1rem;
+            background: rgba(255,255,255,0.12);
+            padding: 6px 18px;
+            border-radius: 40px;
+        }
+
+        .download-btn {
+            background: linear-gradient(100deg, #e67e22, #d35400);
+            border: none;
+            color: white;
+            font-weight: 800;
+            padding: 10px 26px;
+            border-radius: 48px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.2s;
+            font-family: inherit;
+        }
+        .download-btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.05);
+        }
+
+        /* 左右对齐核心布局 */
+        .main-split {
+            display: flex;
+            flex-direction: row;
+            align-items: stretch;
+            gap: 28px;
+            padding: 32px 24px 24px 24px;
+            background: #ffffff;
+        }
+
+        /* 左侧 PreAP & IGCSE 区域 */
+        .left-foundation {
+            flex: 0 0 auto;
+            width: 380px;
+            display: flex;
+            flex-direction: column;
+        }
+        .foundation-card {
+            background: #fefcf8;
+            border-radius: 36px;
+            border: 1px solid #f0e5d8;
+            box-shadow: 0 16px 24px -12px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .foundation-header {
+            background: #101D49;
+            color: white;
+            padding: 24px 16px;
+            text-align: center;
+            border-bottom: 4px solid #f39c12;
+        }
+        .foundation-header i {
+            font-size: 2rem;
+            margin-bottom: 8px;
+            display: block;
+            color: #ffb347;
+        }
+        .foundation-header h3 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+        .foundation-header p {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            margin-top: 6px;
+        }
+        .foundation-content {
+            padding: 28px 22px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+        .course-card {
+            background: white;
+            border-radius: 28px;
+            padding: 18px 20px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.04);
+            border: 1px solid #f3e9dd;
+        }
+        .course-tagline {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: #e67e22;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .course-title-main {
+            font-weight: 800;
+            font-size: 1.45rem;
+            color: #1e2f4e;
+            margin-bottom: 16px;
+            border-left: 5px solid #f39c12;
+            padding-left: 12px;
+        }
+        .section-mini {
+            margin-top: 18px;
+        }
+        .section-mini-title {
+            font-weight: 800;
+            font-size: 0.9rem;
+            color: #b45f1b;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px dashed #ffe0b5;
+            padding-bottom: 5px;
+        }
+        .desc-text {
+            font-size: 0.95rem;
+            color: #2c3e4e;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+        .exam-list {
+            padding-left: 20px;
+            list-style: none;
+        }
+        .exam-list li {
+            margin-bottom: 8px;
+            font-size: 0.88rem;
+            position: relative;
+            padding-left: 18px;
+        }
+        .exam-list li:before {
+            content: "▹";
+            position: absolute;
+            left: 0;
+            color: #e67e22;
+            font-weight: bold;
+        }
+        .badge-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+        .mini-badge {
+            background: #fdf1e2;
+            padding: 5px 14px;
+            border-radius: 60px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #b45f1b;
+        }
+        .info-note {
+            background: #fbf7ef;
+            border-radius: 24px;
+            padding: 14px 16px;
+            margin-top: 6px;
+        }
+        .info-note i {
+            color: #e67e22;
+            margin-right: 6px;
+        }
+        .info-note span {
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+        .info-note p {
+            font-size: 0.8rem;
+            margin-top: 6px;
+            color: #4a627a;
+        }
+
+        /* 右侧区域：上下双轨 */
+        .right-tracks {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            min-width: 0;
+        }
+        .track {
+            width: 100%;
+        }
+        .track-header {
+            display: flex;
+            align-items: baseline;
+            gap: 14px;
+            margin-bottom: 20px;
+            padding-left: 12px;
+            border-left: 6px solid #f39c12;
+        }
+        .track-header h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #1e2f4e;
+            line-height: 1.2;
+        }
+        .track-header p {
+            font-size: 0.9rem;
+            color: #5f7d9c;
+        }
+
+        /* 横向滚动区域 (AP 三科 / A-Level 三阶段) */
+        .timeline-horizontal {
+            display: flex;
+            flex-direction: row;
+            align-items: stretch;
+            gap: 32px;
+            overflow-x: auto;
+            padding-bottom: 16px;
+            width: 100%;
+        }
+        .timeline-horizontal::-webkit-scrollbar {
+            height: 8px;
+        }
+        .timeline-horizontal::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        .timeline-horizontal::-webkit-scrollbar-thumb {
+            background: #f39c12;
+            border-radius: 10px;
+        }
+
+        .timeline-col {
+            flex: 0 0 auto;
+            width: 360px;
+            background: #fefcf8;
+            border-radius: 36px;
+            border: 1px solid #f0e5d8;
+            box-shadow: 0 12px 20px -12px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .col-header {
+            background: #101D49;
+            color: white;
+            padding: 18px 12px;
+            text-align: center;
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+            border-bottom: 4px solid #f39c12;
+        }
+        .col-header i {
+            margin-right: 10px;
+            color: #ffb347;
+            font-size: 1.4rem;
+        }
+        .col-content {
+            padding: 24px 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .footer-note {
+            text-align: center;
+            padding: 18px 24px;
+            font-size: 0.8rem;
+            color: #5f7d9c;
+            border-top: 1px solid #e9e2d4;
+            background: #fcfaf7;
+            width: 100%;
+        }
+
+        .pdf-loading {
+            position: fixed;
+            top:0; left:0; width:100%; height:100%;
+            background: rgba(16,29,73,0.94);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 2000;
+            color: #ffdeaa;
+            font-size: 1.2rem;
+        }
+        .spinner {
+            border: 5px solid rgba(255,225,190,0.3);
+            border-left: 5px solid #f39c12;
+            border-radius: 50%;
+            width: 56px;
+            height: 56px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        @media (max-width: 1300px) {
+            .left-foundation {
+                width: 340px;
+            }
+            .timeline-col {
+                width: 320px;
+            }
+            .main-split {
+                gap: 20px;
+                padding: 24px 16px;
+            }
+        }
+        @media print {
+            body { background: white; }
+            .download-btn, .pdf-loading { display: none; }
+        }
+    </style>
+</head>
+<body>
+<div class="mindmap-container" id="assignmentContainer">
+    <div class="top-bar">
+        <div class="logo-area">
+            <img src="./pic/logo.png" alt="HD Ningbo" class="logo-img" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'80\' height=\'50\' viewBox=\'0 0 80 50\'%3E%3Crect width=\'80\' height=\'50\' fill=\'%23101D49\'/%3E%3Ctext x=\'40\' y=\'32\' text-anchor=\'middle\' fill=\'%23f39c12\' font-size=\'18\'%3ECS%3C/text%3E%3C/svg%3E';">
+            <span class="header-title"><i class="fas fa-laptop-code"></i> 计算机科学 · 全景课程 | PreAP+IGCSE · AP三门 · A-Level全阶</span>
+        </div>
+        <button id="downloadPDFBtn" class="download-btn"><i class="fas fa-download"></i> 保存课程全景 PDF (横向A3·满版)</button>
+    </div>
+
+    <div class="main-split">
+        <!-- 最左侧：PreAP & IGCSE 综合基础课程 -->
+        <div class="left-foundation">
+            <div class="foundation-card">
+                <div class="foundation-header">
+                    <i class="fas fa-seedling"></i>
+                    <h3>PreAP & IGCSE CS</h3>
+                    <p>奠基课程 · 计算思维与编程启蒙</p>
+                </div>
+                <div class="foundation-content">
+                    <div class="course-card">
+                        <div class="course-tagline"><i class="fas fa-microchip"></i> 跨学科综合基础</div>
+                        <div class="course-title-main">计算机科学基石</div>
+                        <div class="desc-text"><strong>📘 核心内容：</strong>计算机基础 (进制转换/数据传输) · 软硬件协同架构 · 网络安全核心概念 · 编程入门：伪代码、循环与条件判断 · 新兴科技导览 (人工智能、机器学习基础)。</div>
+                        <div class="section-mini">
+                            <div class="section-mini-title"><i class="fas fa-clipboard-list"></i> 考察方式</div>
+                            <ul class="exam-list">
+                                <li><strong>单元测验（4次）</strong> – 覆盖理论、编程思维与安全基础</li>
+                                <li><strong>期末综合测试</strong> – 知识+编程综合评估</li>
+                                <li>项目式学习评价（编程基础应用+团队协作）</li>
+                            </ul>
+                        </div>
+                        <div class="badge-group">
+                            <span class="mini-badge"><i class="fas fa-calculator"></i> 进制/数据传输</span>
+                            <span class="mini-badge"><i class="fas fa-shield-alt"></i> 网络安全</span>
+                            <span class="mini-badge"><i class="fas fa-brain"></i> AI/ML入门</span>
+                            <span class="mini-badge"><i class="fas fa-code"></i> 伪代码/循环</span>
+                        </div>
+                    </div>
+                    <div class="info-note">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>衔接 IGCSE / Pre-AP 考试局标准</span>
+                        <p>为AP方向及A-Level体系打下坚实计算机科学基础，涵盖理论、编程实践与新兴技术启蒙，无缝衔接高阶课程。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 右侧 AP 和 A-Level 双轨 -->
+        <div class="right-tracks">
+            <!-- 上半部分：AP 三门核心学科 -->
+            <div class="track">
+                <div class="track-header">
+                    <h2><i class="fas fa-chart-line"></i> AP 升学路线</h2>
+                    <p>大学先修课程 · 三大学科并进</p>
+                </div>
+                <div class="timeline-horizontal">
+                    <!-- AP CSP -->
+                    <div class="timeline-col">
+                        <div class="col-header"><i class="fab fa-python"></i> AP CSP</div>
+                        <div class="col-content">
+                            <div class="course-card">
+                                <div class="course-tagline"><i class="fas fa-chart-simple"></i> 创意计算 · 数字世界</div>
+                                <div class="course-title-main">计算机科学原理</div>
+                                <div class="desc-text"><strong>📘 核心内容：</strong>大数据抽象与信息分析 · 互联网协议与网络架构 · 创新应用开发：使用App Lab / Python / p5.js 构建交互式项目 · 数字伦理与计算的社会影响 · 创造性计算思维训练。</div>
+                                <div class="section-mini">
+                                    <div class="section-mini-title"><i class="fas fa-gavel"></i> AP考试结构</div>
+                                    <ul class="exam-list">
+                                        <li><strong>MCQ (70题/120min)</strong> – 覆盖计算原理、数据抽象、网络与算法基础</li>
+                                        <li><strong>Create Task</strong> – 自主开发完整程序 + 书面分析报告</li>
+                                        <li><strong>FRQ (4题/60min)</strong> – 占最终权重30%</li>
+                                    </ul>
+                                </div>
+                                <div class="badge-group">
+                                    <span class="mini-badge"><i class="fas fa-database"></i> 大数据抽象</span>
+                                    <span class="mini-badge"><i class="fab fa-python"></i> Python/App Lab</span>
+                                    <span class="mini-badge">🌐 网络协议</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- AP CSA -->
+                    <div class="timeline-col">
+                        <div class="col-header"><i class="fab fa-java"></i> AP CSA</div>
+                        <div class="col-content">
+                            <div class="course-card">
+                                <div class="course-tagline"><i class="fas fa-code"></i> 面向对象 · 算法实践</div>
+                                <div class="course-title-main">Java编程与数据结构</div>
+                                <div class="desc-text"><strong>📘 核心内容：</strong>Java语法深度解析 · 控制流与数组操作 · ArrayList与二维数组应用 · 字符串处理算法 · 异常处理与程序调试技巧 · 类设计、继承、多态及接口实现。</div>
+                                <div class="section-mini">
+                                    <div class="section-mini-title"><i class="fas fa-laptop-code"></i> 官方AP考核</div>
+                                    <ul class="exam-list">
+                                        <li><strong>MCQ (42题/90min)</strong> – 代码分析、概念与逻辑追踪</li>
+                                        <li><strong>FRQ (4题/90min)</strong> – 含类设计、数组/ArrayList算法实现及程序逻辑编写</li>
+                                        <li>强调代码可读性、算法思维与OOP设计</li>
+                                    </ul>
+                                </div>
+                                <div class="badge-group">
+                                    <span class="mini-badge">☕ Java核心</span>
+                                    <span class="mini-badge">📚 ArrayList/2D数组</span>
+                                    <span class="mini-badge">🔧 异常处理</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Cyber Security -->
+                    <div class="timeline-col">
+                        <div class="col-header"><i class="fas fa-shield-hawk"></i> Cyber Security</div>
+                        <div class="col-content">
+                            <div class="course-card">
+                                <div class="course-tagline"><i class="fas fa-lock"></i> 安全模型 · 密码工程</div>
+                                <div class="course-title-main">网络安全与攻防基础</div>
+                                <div class="desc-text"><strong>📘 核心内容：</strong>安全模型与标准(ISO 27001) · 操作系统安全强化 · 网络攻防实战入门（渗透测试/防御策略） · 现代密码学：对称/非对称加密、哈希函数与数字签名 · 事件响应与安全管理实践。</div>
+                                <div class="section-mini">
+                                    <div class="section-mini-title"><i class="fas fa-file-alt"></i> 综合考核形式</div>
+                                    <ul class="exam-list">
+                                        <li><strong>MCQ (60题/80min)</strong> – 安全概念、攻击场景、密码学原理</li>
+                                        <li><strong>FRQ (1题/50min)</strong> – 占权重30%，基于真实安全案例的解决方案设计</li>
+                                        <li>包含密码学实践与风险评估任务</li>
+                                    </ul>
+                                </div>
+                                <div class="badge-group">
+                                    <span class="mini-badge">🔐 密码学实践</span>
+                                    <span class="mini-badge">🛡️ 入侵防御</span>
+                                    <span class="mini-badge">⚙️ 安全标准</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 下半部分：A-Level 三个年级科目 (IGCSE, AS, A2) -->
+            <div class="track">
+                <div class="track-header">
+                    <h2><i class="fas fa-graduation-cap"></i> A-Level 升学路线</h2>
+                    <p>剑桥国际 · 三年进阶体系 (IGCSE → AS → A2)</p>
+                </div>
+                <div class="timeline-horizontal">
+                    <!-- IGCSE Computer Science (CIE 0417) -->
+                    <div class="timeline-col">
+                        <div class="col-header"><i class="fas fa-globe-europe"></i> IGCSECS</div>
+                        <div class="col-content">
+                            <div class="course-card">
+                                <div class="course-tagline"><i class="fas fa-certificate"></i> 剑桥IGCSE (0417)</div>
+                                <div class="course-title-main">理论基石 + 伪代码实践</div>
+                                <div class="desc-text"><strong>📘 核心内容：</strong>计算机基础（进制/数据传输） · 软硬件协同架构 · 网络安全核心概念 · 文件处理与文本读写操作 · 网络结构与基本协议 · 算法思维入门。</div>
+                                <div class="section-mini">
+                                    <div class="section-mini-title"><i class="fas fa-pen-ruler"></i> 考核架构</div>
+                                    <ul class="exam-list">
+                                        <li><strong>Paper 1 理论知识</strong> – 计算机系统、内存、网络、数据表示</li>
+                                        <li><strong>Paper 2 编程知识</strong> – 伪代码、流程图、算法设计与问题求解</li>
+                                    </ul>
+                                </div>
+                                <div class="badge-group">
+                                    <span class="mini-badge">📁 文件处理</span>
+                                    <span class="mini-badge">🌐 网络结构</span>
+                                    <span class="mini-badge">📖 伪代码</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- AS Level Computer Science (CIE 9618) -->
+                    <div class="timeline-col">
+                        <div class="col-header"><i class="fas fa-layer-group"></i> AS Level CS</div>
+                        <div class="col-content">
+                            <div class="course-card">
+                                <div class="course-tagline"><i class="fas fa-microphone-alt"></i> 剑桥国际AS阶段 (9618)</div>
+                                <div class="course-title-main">网络 · 算法 · 数据库伦理</div>
+                                <div class="desc-text"><strong>📘 核心内容：</strong>计算机网络(OSI模型/TCP/IP协议栈) · 编程基础与算法思维 · 基本数据结构(栈/队列/链表) · 数据库设计与SQL查询 · 计算机伦理道德与网络安全基础。</div>
+                                <div class="section-mini">
+                                    <div class="section-mini-title"><i class="fas fa-paste"></i> AS考核方式</div>
+                                    <ul class="exam-list">
+                                        <li><strong>Paper 1 理论知识</strong> – 计算机系统、网络、硬件与数据结构理论</li>
+                                        <li><strong>Paper 2 编程知识</strong> – 伪代码/算法求解、问题抽象与设计</li>
+                                    </ul>
+                                </div>
+                                <div class="badge-group">
+                                    <span class="mini-badge">🌐 OSI模型</span>
+                                    <span class="mini-badge">🗄️ SQL与数据库</span>
+                                    <span class="mini-badge">🧠 算法基础</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- A2 Level Computer Science (CIE 9618) -->
+                    <div class="timeline-col">
+                        <div class="col-header"><i class="fas fa-crown"></i> A2 Level CS</div>
+                        <div class="col-content">
+                            <div class="course-card">
+                                <div class="course-tagline"><i class="fas fa-robot"></i> 高级算法 · AI导论</div>
+                                <div class="course-title-main">高级数据结构与项目开发</div>
+                                <div class="desc-text"><strong>📘 核心内容：</strong>高级数据结构(图/树/哈希表) · 算法复杂度深入(O表示法优化) · 编译原理导论(词法/语法分析) · 高级网络安全 · 人工智能基础(搜索/推理/机器学习导论) · Python编程进阶与大型项目实践。</div>
+                                <div class="section-mini">
+                                    <div class="section-mini-title"><i class="fas fa-keyboard"></i> A2评估架构</div>
+                                    <ul class="exam-list">
+                                        <li><strong>Paper 3 理论知识</strong> – 高级算法、编译原理、AI、加密技术</li>
+                                        <li><strong>Paper 4 Python上机考试</strong> – 解决复杂编程问题，涉及数据结构和算法实现</li>
+                                        <li>注重算法设计、代码效率和系统分析能力</li>
+                                    </ul>
+                                </div>
+                                <div class="badge-group">
+                                    <span class="mini-badge">📈 算法复杂度</span>
+                                    <span class="mini-badge">🤖 人工智能基础</span>
+                                    <span class="mini-badge">🐍 Python项目</span>
+                                    <span class="mini-badge">⚙️ 编译原理</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-note">
+        <i class="fas fa-chalkboard-user"></i> PreAP & IGCSE CS 作为全能奠基课程；AP三科对标College Board最新考纲；A-Level遵循CIE 0417/9618体系。具体规划请咨询学科导师。
+    </div>
+</div>
+
+<div id="pdfLoadingOverlay" class="pdf-loading" style="display: none;">
+    <div class="spinner"></div>
+    <p>正在生成横向A3 PDF (满版无白边)，请稍后...</p>
+</div>
+
+<script>
+    (function() {
+        const downloadBtn = document.getElementById('downloadPDFBtn');
+        const loadingOverlay = document.getElementById('pdfLoadingOverlay');
+        const container = document.getElementById('assignmentContainer');
+
+        // 完全参照升学.html的导出逻辑，并额外处理内部滚动区域展开
+        async function generateFullWidthPDF() {
+            if (!container) return;
+            loadingOverlay.style.display = 'flex';
+            if (downloadBtn) downloadBtn.style.display = 'none';
+            
+            // 保存原始样式
+            const originalWidth = container.style.width;
+            const originalMinWidth = container.style.minWidth;
+            const originalOverflow = container.style.overflow;
+            
+            // 获取所有横向滚动容器，临时取消滚动，强制内容全部平铺
+            const scrollWrappers = document.querySelectorAll('.timeline-horizontal');
+            const originalOverflowXValues = [];
+            scrollWrappers.forEach((wrapper, idx) => {
+                originalOverflowXValues.push(wrapper.style.overflowX);
+                wrapper.style.overflowX = 'visible';
+                wrapper.style.flexWrap = 'nowrap';
+                // 确保宽度不被限制
+                wrapper.style.width = 'max-content';
+                wrapper.style.minWidth = '100%';
+            });
+            
+            // 强制主容器宽度自适应且足够宽
+            container.style.width = 'max-content';
+            container.style.minWidth = '1800px';  // 足够容纳所有卡片
+            container.style.overflow = 'visible';
+            
+            // 等待布局完全重绘
+            await new Promise(resolve => setTimeout(resolve, 200));
+            
+            try {
+                const canvas = await html2canvas(container, {
+                    scale: 3.2,
+                    backgroundColor: '#ffffff',
+                    useCORS: true,
+                    logging: false,
+                    windowWidth: container.scrollWidth,
+                    windowHeight: container.scrollHeight
+                });
+                
+                const imgData = canvas.toDataURL('image/png');
+                const { jsPDF } = window.jspdf;
+                
+                const pdfWidthMM = 420;  // A3横向宽度
+                const pdfHeightMM = 297; // A3横向高度
+                
+                const imgWidthPX = canvas.width;
+                const imgHeightPX = canvas.height;
+                
+                // 让图片宽度填满PDF宽度（无左右留白）
+                let scale = pdfWidthMM / imgWidthPX;
+                let finalImgWidthMM = pdfWidthMM;
+                let finalImgHeightMM = imgHeightPX * scale;
+                
+                // 如果高度超出页面，则按高度比例缩放（保持完整显示）
+                if (finalImgHeightMM > pdfHeightMM) {
+                    scale = pdfHeightMM / imgHeightPX;
+                    finalImgHeightMM = pdfHeightMM;
+                    finalImgWidthMM = imgWidthPX * scale;
+                }
+                
+                // 水平居中（极少出现偏差，但确保满版感）
+                const xOffset = (pdfWidthMM - finalImgWidthMM) / 2;
+                const yOffset = (pdfHeightMM - finalImgHeightMM) / 2;
+                
+                const pdf = new jsPDF({
+                    unit: 'mm',
+                    format: 'a3',
+                    orientation: 'landscape'
+                });
+                
+                pdf.addImage(imgData, 'PNG', xOffset, yOffset, finalImgWidthMM, finalImgHeightMM);
+                
+                const timestamp = new Date().toISOString().slice(0,19).replace(/:/g, '-');
+                pdf.save(`CS_Course_Full_A3_${timestamp}.pdf`);
+            } catch (err) {
+                console.error('PDF生成失败:', err);
+                alert('生成PDF失败，请刷新后重试。\n' + (err.message || '未知错误'));
+            } finally {
+                // 恢复滚动容器的原始overflow样式
+                scrollWrappers.forEach((wrapper, idx) => {
+                    wrapper.style.overflowX = originalOverflowXValues[idx] || '';
+                    wrapper.style.width = '';
+                    wrapper.style.minWidth = '';
+                });
+                // 恢复主容器样式
+                container.style.width = originalWidth;
+                container.style.minWidth = originalMinWidth;
+                container.style.overflow = originalOverflow;
+                if (downloadBtn) downloadBtn.style.display = 'inline-flex';
+                loadingOverlay.style.display = 'none';
+            }
+        }
+
+        if (downloadBtn) {
+            downloadBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                generateFullWidthPDF().catch(err => {
+                    console.warn(err);
+                    alert('导出过程中出现错误，请稍后再试');
+                    if(downloadBtn) downloadBtn.style.display = 'inline-flex';
+                    loadingOverlay.style.display = 'none';
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>
