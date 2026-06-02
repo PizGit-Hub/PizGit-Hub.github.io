@@ -32,7 +32,7 @@
             overflow: hidden;
         }
 
-        /* 按钮栏：三个主模块按钮 (移除了下载按钮) */
+        /* 按钮栏：三个主模块按钮 */
         .button-nav {
             background: linear-gradient(135deg, #101D49 0%, #1B2D5A 100%);
             padding: 18px 28px;
@@ -91,6 +91,7 @@
             padding: 32px 36px;
             background: #ffffff;
             transition: all 0.2s;
+            min-height: 400px;
         }
 
         .dynamic-content {
@@ -100,17 +101,6 @@
             from { opacity: 0; transform: translateY(12px);}
             to { opacity: 1; transform: translateY(0);}
         }
-
-        .placeholder-welcome {
-            text-align: center;
-            padding: 68px 28px;
-            background: #fffcf5;
-            border-radius: 48px;
-            border-left: 8px solid #f39c12;
-        }
-        .placeholder-welcome i { font-size: 4rem; color: #e6bc8b; margin-bottom: 20px; }
-        .placeholder-welcome h3 { font-size: 1.8rem; color: #101D49; margin-bottom: 12px; }
-        /* 删除了原段落内容，不再显示引导句子 */
 
         /* 习题卡片 */
         .exercise-card {
@@ -264,14 +254,8 @@
     </div>
 
     <div class="content-stage" id="contentStage">
-        <!-- 占位初始界面（删除了原有的引导段落） -->
-        <div id="placeholderDiv" class="placeholder-welcome dynamic-content">
-            <i class="fas fa-magic"></i>
-            <h3>📖 假期视觉笔记 · 多维学习</h3>
-            <!-- 原引导文字已移除，保持简洁 -->
-        </div>
-
-        <!-- 编程题目区（含返回主菜单按钮） -->
+        <!-- 初始无任何内容，占位符已删除，完全空白 -->
+        <!-- 三个内容块动态显示，默认全部隐藏 -->
         <div id="programmingContent" class="dynamic-content" style="display: none;">
             <div class="exercise-card"><div class="exercise-title">Exercise 1: 判断正负零 <small>Positive, Negative or Zero</small></div><div class="desc-en">📘 Reads an integer, prints Positive/Negative/Zero.</div><div class="io-block">🔹 Input: integer &nbsp;|&nbsp; Output: 正数/负数/零</div><div class="example">💡 5 → 正数 &nbsp; -3 → 负数 &nbsp; 0 → 零</div></div>
             <div class="exercise-card"><div class="exercise-title">Exercise 2: 奇偶数判断 <small>Even or Odd</small></div><div class="desc-en">🔢 Determine if integer is odd or even.</div><div class="io-block">🔹 Input: integer &nbsp;|&nbsp; Output: 奇数/偶数</div><div class="example">💡 7 → 奇数 &nbsp; -4 → 偶数</div></div>
@@ -284,7 +268,6 @@
             <div class="exercise-card"><div class="exercise-title">Exercise 9: 冒泡排序 <small>Bubble Sort</small></div><div class="desc-en">Sort [64,34,25,12,22,11,90] ascending.</div><div class="example">💡 排序前: [64,34,25,12,22,11,90] → 排序后: [11,12,22,25,34,64,90]</div></div>
             <div class="exercise-card"><div class="exercise-title">Exercise 10: 列表数据统计 <small>List Statistics</small></div><div class="desc-en">List: [23,-45,12,3,-12,-2,13,90,344,14.3,-32] → count positives, negatives, numbers>10.</div><div class="example">💡 正数个数:7 &nbsp; 负数个数:4 &nbsp; >10: [23,12,13,90,344,14.3]</div></div>
             <div class="badge-note"><i class="fas fa-laptop-code"></i> 共10道核心编程任务，掌握条件分支、循环、数组与基础算法。</div>
-            <!-- 返回主菜单按钮 -->
             <div class="button-group">
                 <button class="action-button" id="backHomeFromProg"><i class="fas fa-home"></i> 返回主菜单</button>
             </div>
@@ -292,7 +275,6 @@
 
         <!-- 阅读&电影 栏目（包含《Can't Hurt Me》与《模仿游戏》+ 下载资源按钮 + 返回按钮） -->
         <div id="readingContent" class="dynamic-content" style="display: none;">
-            <!-- 书籍部分：《Can't Hurt Me》 -->
             <div class="book-movie-card">
                 <div class="card-title"><i class="fas fa-book"></i> 《Can't Hurt Me》—— David Goggins</div>
                 <p><strong>📖 现象级回忆录 | 全球销量超500万册</strong> —— 讲述从创伤、暴力和失败中挣脱，挖掘人类潜能的故事。</p>
@@ -303,7 +285,6 @@
                 <strong>内心硬汉：</strong> 坦诚恐惧与自我怀疑，锻造“心智工具箱”，主张“人类潜能只开发了40%”。</p>
                 <div class="quote"><i class="fas fa-quote-left"></i> 你只能被自己所定义，而不是过去或他人。直面痛苦，成为更强版本自己。</div>
             </div>
-            <!-- 电影《模仿游戏》 -->
             <div class="book-movie-card">
                 <div class="card-title"><i class="fas fa-film"></i> 《模仿游戏》—— 艾伦·图灵的传奇</div>
                 <p><strong>🎬 2014年传记电影 | 豆瓣高分 · 本尼迪克特·康伯巴奇主演</strong> —— 聚焦天才数学家艾伦·图灵在二战中破译恩尼格玛密码机的史诗故事。</p>
@@ -317,8 +298,6 @@
                 <div class="quote"><i class="fas fa-microchip"></i> “我们使用机器去思考，去打败纳粹，但人类却无法包容一个不同的人。” —— 铭记历史，致敬每一个为真理与自由而战的灵魂。</div>
             </div>
             <div class="badge-note"><i class="fas fa-heart"></i> 书籍与电影双重推荐：从戈金斯的钢铁意志到图灵的非凡大脑，跨越身心极限。</div>
-            
-            <!-- 下载资源按钮 (放在阅读&电影目录下) + 返回主菜单按钮 -->
             <div class="button-group">
                 <button class="action-button download-resource-btn" id="downloadInsideReading"><i class="fas fa-download"></i> 下载资源</button>
                 <button class="action-button" id="backHomeFromReading"><i class="fas fa-home"></i> 返回主菜单</button>
@@ -328,8 +307,6 @@
         <!-- 预习新课 中英双语完整版本 + 返回按钮 -->
         <div id="previewContent" class="dynamic-content" style="display: none;">
             <span class="badge-note"><i class="fas fa-globe"></i> IGCSE 计算机科学 · 核心概念预习 (中英双语 / Bilingual)</span>
-            
-            <!-- 1. Data Representation -->
             <div class="bilingual-block">
                 <div class="bilingual-title">📊 1. Data Representation / 数据表示</div>
                 <div class="zh-text"><strong>二进制前缀 (Binary Prefixes)</strong>：十进制前缀 1 KB = 1000 B, 1 MB = 10⁶ B (硬盘常用)。二进制前缀 1 KiB = 1024 B, 1 MiB = 1024² B (RAM精确)。重要性：RAM使用二进制前缀，存储设备常使用十进制前缀以免混淆。</div>
@@ -347,8 +324,6 @@
                 <div class="zh-text"><strong>字符集</strong>：ASCII(7-bit,128字符)，扩展ASCII(8-bit,256字符)，Unicode(≥16-bit)支持全球语言与表情符号。</div>
                 <div class="en-text"><strong>Character Sets:</strong> ASCII (7-bit,128 chars), Extended ASCII (8-bit), Unicode (min 16-bit) supports all languages & emoji.</div>
             </div>
-
-            <!-- 2. Multimedia 多媒体 -->
             <div class="bilingual-block">
                 <div class="bilingual-title">🎨 2. Multimedia / 多媒体</div>
                 <div class="zh-text"><strong>位图图像 (Bitmap)</strong>：由像素组成，图像分辨率=宽×高，颜色深度(每像素位数)决定颜色数=2ⁿ。文件大小(位)=分辨率×颜色深度。</div>
@@ -369,8 +344,6 @@
                 <div class="zh-text"><strong>声音编码 (Sound Encoding)</strong>：模拟信号通过采样(采样率Hz，采样分辨率bit)转为数字。CD质量:44.1kHz/16bit。质量越高文件越大。</div>
                 <div class="en-text"><strong>Sound Encoding:</strong> Analogue sound is sampled (sampling rate in Hz, sampling resolution in bits). CD quality: 44.1 kHz / 16-bit. Higher quality → larger file size.</div>
             </div>
-
-            <!-- 3. Compression 压缩 -->
             <div class="bilingual-block">
                 <div class="bilingual-title">🗜️ 3. Compression / 压缩</div>
                 <div class="zh-text"><strong>有损压缩 (Lossy)</strong>：数据永久丢失，不可逆，高压缩率(JPEG, MP3)。适合图像、音频、视频(可接受质量损失)。</div>
@@ -383,13 +356,12 @@
                 <div class="en-text"><strong>Common Compressed Formats:</strong> MP3 (lossy audio), MP4 (multimedia container), JPEG (lossy bitmap images).</div>
             </div>
             <div class="badge-note"><i class="fas fa-language"></i> 中英对照预习，提升专业术语理解，为新课做好充分准备。</div>
-            <!-- 返回主菜单按钮 -->
             <div class="button-group">
                 <button class="action-button" id="backHomeFromPreview"><i class="fas fa-home"></i> 返回主菜单</button>
             </div>
         </div>
     </div>
-    <footer>📌 假期快乐 | Alevel Computer Science </footer>
+    <footer>📌 自主选择模块 · 假期深耕 | IGCSE Computer Science 视觉笔记</footer>
 </div>
 
 <script>
@@ -397,54 +369,67 @@
         const btnProg = document.getElementById('btnProgramming');
         const btnRead = document.getElementById('btnReading');
         const btnPreview = document.getElementById('btnPreview');
-        const placeholder = document.getElementById('placeholderDiv');
         const progDiv = document.getElementById('programmingContent');
         const readDiv = document.getElementById('readingContent');
         const previewDiv = document.getElementById('previewContent');
         
-        // 返回主菜单的按钮
         const backHomeProg = document.getElementById('backHomeFromProg');
         const backHomeReading = document.getElementById('backHomeFromReading');
         const backHomePreview = document.getElementById('backHomeFromPreview');
-        // 阅读模块内的下载按钮
         const downloadInsideReading = document.getElementById('downloadInsideReading');
         
         function resetActive() {
             [btnProg, btnRead, btnPreview].forEach(btn => btn && btn.classList.remove('active'));
         }
-        function hideAll() {
-            if(placeholder) placeholder.style.display = 'none';
+        
+        function hideAllContents() {
             if(progDiv) progDiv.style.display = 'none';
             if(readDiv) readDiv.style.display = 'none';
             if(previewDiv) previewDiv.style.display = 'none';
         }
-        function showPlaceholder() {
-            hideAll();
-            if(placeholder) placeholder.style.display = 'flex';
-            resetActive();
-        }
-        function showProgramming() { hideAll(); if(progDiv) progDiv.style.display = 'block'; resetActive(); btnProg.classList.add('active'); }
-        function showReading() { hideAll(); if(readDiv) readDiv.style.display = 'block'; resetActive(); btnRead.classList.add('active'); }
-        function showPreview() { hideAll(); if(previewDiv) previewDiv.style.display = 'block'; resetActive(); btnPreview.classList.add('active'); }
         
-        // 绑定主按钮事件
+        function showPlaceholder() {
+            hideAllContents();
+            resetActive();
+            // 无任何内容，完全空白
+        }
+        
+        function showProgramming() {
+            hideAllContents();
+            if(progDiv) progDiv.style.display = 'block';
+            resetActive();
+            btnProg.classList.add('active');
+        }
+        
+        function showReading() {
+            hideAllContents();
+            if(readDiv) readDiv.style.display = 'block';
+            resetActive();
+            btnRead.classList.add('active');
+        }
+        
+        function showPreview() {
+            hideAllContents();
+            if(previewDiv) previewDiv.style.display = 'block';
+            resetActive();
+            btnPreview.classList.add('active');
+        }
+        
         if(btnProg) btnProg.addEventListener('click', showProgramming);
         if(btnRead) btnRead.addEventListener('click', showReading);
         if(btnPreview) btnPreview.addEventListener('click', showPreview);
         
-        // 返回主菜单事件
         if(backHomeProg) backHomeProg.addEventListener('click', showPlaceholder);
         if(backHomeReading) backHomeReading.addEventListener('click', showPlaceholder);
         if(backHomePreview) backHomePreview.addEventListener('click', showPlaceholder);
         
-        // 阅读模块内的下载资源弹窗
         if(downloadInsideReading) {
             downloadInsideReading.addEventListener('click', () => {
                 alert("Pizzy 懒得开发这个功能了，私信Pizzy获取资源");
             });
         }
         
-        // 默认显示占位符（无多余文字，仅图标和标题）
+        // 初始无任何内容（只显示三个按钮，下方空白）
         showPlaceholder();
     })();
 </script>
